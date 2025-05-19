@@ -6,7 +6,6 @@ public class VehicleRecord extends Record{
     private Long vehicleOdometer;
     private String vehicleMake;
     private String vehicleModel;
-    private
 
     final static String VEHICLE_ID_TOKEN = "Vehicle ID";
     final static String VEHICLE_YEAR_TOKEN = "Vehicle Year";
@@ -38,10 +37,10 @@ public class VehicleRecord extends Record{
                     break;
                 case VEHICLE_YEAR_TOKEN:
                 {
-                   if(isInt(recordFields.get(key).orElse("Not an int"))){
-                    vehicleYear = Integer.parseInt(recordFields.get(key).orElse("No Data Recorded"));
-                    break;
-                }
+                   if(isInt(recordFields.get(key).orElse("Not an int"))) {
+                       vehicleYear = Integer.parseInt(recordFields.get(key).orElse("No Data Recorded"));
+                       break;
+                   }
                 }
                 case VEHICLE_MAKE_TOKEN:
                     vehicleMake = recordFields.get(key).orElse("No Data Recorded");
@@ -100,7 +99,6 @@ public class VehicleRecord extends Record{
                 + "Vehicle Model: " + getVehicleModel()
                 + "\n";
 
-        //considering returning the previous operator who used this vehicle
     }
     private static boolean isInt(String string)
     {
