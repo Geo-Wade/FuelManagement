@@ -10,8 +10,6 @@ public class ProductRecord extends Record {
     final static String REORDER_LIMIT_TOKEN = "Reorder Limit";
     final static String PRICE_TOKEN = "Price";
 
-    public static long odomRestrictedDistance;
-
     public ProductRecord() {
         recordFields = new LinkedHashMap<>();
         recordFields.put(PRODUCT_ID_TOKEN, Optional.empty());

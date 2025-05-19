@@ -6,14 +6,13 @@ public class VehicleRecord extends Record{
     private Long vehicleOdometer;
     private String vehicleMake;
     private String vehicleModel;
+    private
 
     final static String VEHICLE_ID_TOKEN = "Vehicle ID";
     final static String VEHICLE_YEAR_TOKEN = "Vehicle Year";
     final static String VEHICLE_MAKE_TOKEN = "Vehicle Make";
     final static String VEHICLE_MODEL_TOKEN = "Vehicle Model";
     final static String VEHICLE_ODOMETER_TOKEN = "Vehicle Odometer";
-
-    public static long odomRestrictedDistance;
 
 
     public VehicleRecord()

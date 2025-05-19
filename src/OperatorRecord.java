@@ -11,8 +11,6 @@ public class OperatorRecord extends Record {
     final static String OPERATOR_FIRST_NAME_TOKEN = "Operator First Name";
     final static String OPERATOR_LAST_NAME_TOKEN = "Operator Last Name";
 
-    public static long odomRestrictedDistance;
-
     public OperatorRecord() {
         recordFields = new LinkedHashMap<>();
         recordFields.put(OPERATOR_ID_TOKEN, Optional.empty());
