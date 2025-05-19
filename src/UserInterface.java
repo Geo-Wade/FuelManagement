@@ -16,8 +16,8 @@ public class UserInterface {
             System.out.println("""
                     What Action Would you like to perform
                     1 - Edit Record
-                    2 - Begin Fueling
-                    3 - reset""");
+                    2 - Begin Fueling - Not Implemented
+                    3 - reset - Kills Program""");
             switch (MenuHandler.handleSelection(scanner.nextLine())) {
                 case MenuSelectionEnum.FIRST_OPTION_SELECTED -> homePromptEditRecordSelected();
                 case MenuSelectionEnum.SECOND_OPTION_SELECTED -> System.out.println("Begin Fueling has not been implemented");
@@ -35,9 +35,9 @@ public class UserInterface {
                     1 - Equipment
                     2 - Operator
                     3 - Product
-                    4 - Tank
-                    5 - Fueling Position
-                    6 - Exit
+                    4 - Tank - Not Implemented
+                    5 - Fueling Position - Not Implemented
+                    6 - Exit - Not Implemented 
                     """);
             switch (MenuHandler.handleSelection(scanner.nextLine())) {
                 case MenuSelectionEnum.FIRST_OPTION_SELECTED -> editRecordPromptEquipmentSelected(RecordType.EQUIPMENT);
@@ -59,16 +59,14 @@ public class UserInterface {
             System.out.println("""
                     What would you like to do to the record?
                     1 - Add
-                    2 - Edit
+                    2 - Edit - Not Implemented
                     3 - Exit""");
             switch (MenuHandler.handleSelection(scanner.nextLine())) {
                 case FIRST_OPTION_SELECTED -> {
                     addSelectedRecord(recordType);
-                    keepPresenting = false;
                 }
                 case SECOND_OPTION_SELECTED -> {
                     System.out.println(("Edit has not been handled yet"));
-                    keepPresenting = false;
                 }
                 case THIRD_OPTION_SELECTED -> {
                     keepPresenting = false;
