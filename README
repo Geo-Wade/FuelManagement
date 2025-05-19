@@ -1,0 +1,4 @@
+#TODO - Add Tank and Fueling position records
+#TODO - Create mechanic for asynchronous fueling and fuel recording 
+#TODO - Create testing framework with JUnit
+#TODO - Write records to file 
