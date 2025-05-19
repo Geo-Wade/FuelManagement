@@ -1,4 +1,6 @@
 #TODO - Add Tank and Fueling position records
+#TODO - Set timers for UI prompts to give more time for reading
+#TODO - Set timout timers for UI so menus will return to the previous menu
 #TODO - Create mechanic for asynchronous fueling and fuel recording 
 #TODO - Create testing framework with JUnit
 #TODO - Write records to file 
