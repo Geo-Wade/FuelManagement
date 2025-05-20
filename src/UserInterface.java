@@ -20,7 +20,8 @@ public class UserInterface {
                     3 - reset - Kills Program""");
             switch (MenuHandler.handleSelection(scanner.nextLine())) {
                 case MenuSelectionEnum.FIRST_OPTION_SELECTED -> homePromptEditRecordSelected();
-                case MenuSelectionEnum.SECOND_OPTION_SELECTED -> System.out.println("Begin Fueling has not been implemented");
+                case MenuSelectionEnum.SECOND_OPTION_SELECTED ->
+                        System.out.println("Begin Fueling has not been implemented");
                 case MenuSelectionEnum.THIRD_OPTION_SELECTED -> valid = false;
                 default -> invalidSelection();
             }
@@ -35,7 +36,7 @@ public class UserInterface {
                     1 - Equipment
                     2 - Operator
                     3 - Product
-                    4 - Tank - Not Implemented
+                    4 - Tank
                     5 - Fueling Position - Not Implemented
                     6 - Exit - Not Implemented 
                     """);
@@ -43,8 +44,7 @@ public class UserInterface {
                 case MenuSelectionEnum.FIRST_OPTION_SELECTED -> editRecordPromptEquipmentSelected(RecordType.EQUIPMENT);
                 case MenuSelectionEnum.SECOND_OPTION_SELECTED -> editRecordPromptEquipmentSelected(RecordType.OPERATOR);
                 case MenuSelectionEnum.THIRD_OPTION_SELECTED -> editRecordPromptEquipmentSelected(RecordType.PRODUCT);
-                case MenuSelectionEnum.FOURTH_OPTION_SELECTED ->
-                        System.out.println("Tank Selection has not been handled yet");
+                case MenuSelectionEnum.FOURTH_OPTION_SELECTED -> editRecordPromptEquipmentSelected(RecordType.TANK);
                 case MenuSelectionEnum.FIFTH_OPTION_SELECTED ->
                         System.out.println("Fueling Position Selection has not been handled yet");
                 case MenuSelectionEnum.SIXTH_OPTION_SELECTED -> keepPresenting = false;
@@ -88,23 +88,31 @@ public class UserInterface {
             case RecordType.EQUIPMENT:
                 record = new VehicleRecord();
                 RecordAssignments.AssignRecordFields(record.getRecordField());
-                if (!Vehicles.add((VehicleRecord)record)) {
+                if (!Vehicles.add((VehicleRecord) record)) {
                     System.out.println("Record Not Saved!");
                 }
                 break;
             case RecordType.OPERATOR:
                 record = new OperatorRecord();
                 RecordAssignments.AssignRecordFields(record.getRecordField());
-                if (!Operators.add((OperatorRecord)record)) {
+                if (!Operators.add((OperatorRecord) record)) {
                     System.out.println("Record Not Saved!");
                 }
                 break;
             case RecordType.PRODUCT:
                 record = new ProductRecord();
                 RecordAssignments.AssignRecordFields(record.getRecordField());
-                if (!Products.add((ProductRecord)record)) {
+                if (!Products.add((ProductRecord) record)) {
                     System.out.println("Record Not Saved!");
                 }
+                break;
+            case RecordType.TANK:
+                record = new TankRecord();
+                RecordAssignments.AssignRecordFields(record.getRecordField());
+                if (!Tanks.add((TankRecord)record)){
+
+                }
+                break;
             default:
                 System.out.println("Invalid Record Type: " + recordType);
         }
