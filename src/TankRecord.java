@@ -47,6 +47,7 @@ public class TankRecord extends Record {
                     if (isInt(recordFields.get(key).orElse("No Data Recorded"))) {
                         fuelVolume = Integer.parseInt(recordFields.get(key).orElse("No Data Recorded"));
                     }
+                    break;
                 }
                 default:
                     System.out.println("Invalid Data Provided To Record: " + key);

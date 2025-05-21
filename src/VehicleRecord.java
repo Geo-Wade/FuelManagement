@@ -39,8 +39,8 @@ public class VehicleRecord extends Record{
                 {
                    if(isInt(recordFields.get(key).orElse("Not an int"))) {
                        vehicleYear = Integer.parseInt(recordFields.get(key).orElse("No Data Recorded"));
-                       break;
                    }
+                   break;
                 }
                 case VEHICLE_MAKE_TOKEN:
                     vehicleMake = recordFields.get(key).orElse("No Data Recorded");
@@ -51,6 +51,7 @@ public class VehicleRecord extends Record{
                     if(isLong(recordFields.get(key).orElse("No Data Recorded"))) {
                         vehicleOdometer = Long.parseLong(recordFields.get(key).orElse("No Data Recorded"));
                     }
+                    break;
                 default:
                     System.out.println("Invalid Data Provided TO Record: " + key);
                     break;
