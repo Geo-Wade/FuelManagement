@@ -38,7 +38,7 @@ public class UserInterface {
                     3 - Product
                     4 - Tank
                     5 - Fueling Position - Not Implemented
-                    6 - Exit - Not Implemented 
+                    6 - Exit
                     """);
             switch (MenuHandler.handleSelection(scanner.nextLine())) {
                 case MenuSelectionEnum.FIRST_OPTION_SELECTED -> editRecordPromptEquipmentSelected(RecordType.EQUIPMENT);
@@ -63,7 +63,13 @@ public class UserInterface {
                     3 - Exit""");
             switch (MenuHandler.handleSelection(scanner.nextLine())) {
                 case FIRST_OPTION_SELECTED -> {
-                    addSelectedRecord(recordType);
+                    UserAssignedRecord recordAssignments = x -> {
+                        for (Map.Entry<String, Optional<String>> entry : x.entrySet()) {
+                            System.out.print("Enter a value for " + entry.getKey() + ": ");
+                            entry.setValue(Optional.ofNullable(scanner.nextLine()));
+                        }
+                    };
+                    Record.recordCreator(recordAssignments, recordType);
                 }
                 case SECOND_OPTION_SELECTED -> {
                     System.out.println(("Edit has not been handled yet"));
@@ -73,48 +79,6 @@ public class UserInterface {
                 }
                 default -> invalidSelection();
             }
-        }
-    }
-
-    public void addSelectedRecord(RecordType recordType) {
-        UserAssignedRecord RecordAssignments = x -> {
-            for (Map.Entry<String, Optional<String>> entry : x.entrySet()) {
-                System.out.print("Enter a value for " + entry.getKey() + ": ");
-                entry.setValue(Optional.ofNullable(scanner.nextLine()));
-            }
-        };
-        Record record;
-        switch (recordType) {
-            case RecordType.EQUIPMENT:
-                record = new VehicleRecord();
-                RecordAssignments.AssignRecordFields(record.getRecordField());
-                if (!Vehicles.add((VehicleRecord) record)) {
-                    System.out.println("Record Not Saved!");
-                }
-                break;
-            case RecordType.OPERATOR:
-                record = new OperatorRecord();
-                RecordAssignments.AssignRecordFields(record.getRecordField());
-                if (!Operators.add((OperatorRecord) record)) {
-                    System.out.println("Record Not Saved!");
-                }
-                break;
-            case RecordType.PRODUCT:
-                record = new ProductRecord();
-                RecordAssignments.AssignRecordFields(record.getRecordField());
-                if (!Products.add((ProductRecord) record)) {
-                    System.out.println("Record Not Saved!");
-                }
-                break;
-            case RecordType.TANK:
-                record = new TankRecord();
-                RecordAssignments.AssignRecordFields(record.getRecordField());
-                if (!Tanks.add((TankRecord)record)){
-
-                }
-                break;
-            default:
-                System.out.println("Invalid Record Type: " + recordType);
         }
     }
 
