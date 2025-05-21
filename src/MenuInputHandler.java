@@ -1,8 +1,16 @@
-public class MenuHandler {
+import java.util.Scanner;
 
-    public static MenuSelectionEnum handleSelection(String selection) {
-        if (isInt(selection)) {
-            int iSelection = Integer.parseInt(selection);
+public class MenuInputHandler {
+
+    static Scanner scanner = new Scanner(System.in);
+    public static String inputHandler() {
+        return scanner.nextLine();
+    }
+
+    public static MenuSelectionEnum getMenuSelection() {
+        String input = inputHandler();
+        if (isInt(input)) {
+            int iSelection = Integer.parseInt(input);
             return switch (iSelection) {
                 case 1 -> MenuSelectionEnum.FIRST_OPTION_SELECTED;
                 case 2 -> MenuSelectionEnum.SECOND_OPTION_SELECTED;
@@ -16,17 +24,21 @@ public class MenuHandler {
         return MenuSelectionEnum.INVALID_SELECTION;
     }
 
-    public static boolean userSelectExit(String string, String escapeResponse) {
-        return (!string.equals(escapeResponse));
+
+    public static String getInputString(){
+        return inputHandler();
     }
 
     private static boolean isInt(String string) {
         try {
-            int x = Integer.parseInt(string);
+            Integer.parseInt(string);
         } catch (NumberFormatException e) {
             return false;
         }
         return true;
+    }
+    static void inputClose(){
+        scanner.close();
     }
 }
 

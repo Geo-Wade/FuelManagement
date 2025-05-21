@@ -1,14 +1,6 @@
 import java.util.*;
 
 public class UserInterface {
-    //Implements Home Prompt
-    //Static option to for other classes to print correction prompts
-    Scanner scanner;
-
-    UserInterface() {
-        scanner = new Scanner(System.in);
-    }
-
     public void firstPrompt() {
 
         boolean valid = true;
@@ -18,11 +10,14 @@ public class UserInterface {
                     1 - Edit Record
                     2 - Begin Fueling - Not Implemented
                     3 - reset - Kills Program""");
-            switch (MenuHandler.handleSelection(scanner.nextLine())) {
+            switch (MenuInputHandler.getMenuSelection()) {
                 case MenuSelectionEnum.FIRST_OPTION_SELECTED -> homePromptEditRecordSelected();
                 case MenuSelectionEnum.SECOND_OPTION_SELECTED ->
                         System.out.println("Begin Fueling has not been implemented");
-                case MenuSelectionEnum.THIRD_OPTION_SELECTED -> valid = false;
+                case MenuSelectionEnum.THIRD_OPTION_SELECTED -> {
+                    MenuInputHandler.inputClose();
+                    valid = false;
+                }
                 default -> invalidSelection();
             }
         }
@@ -40,7 +35,7 @@ public class UserInterface {
                     5 - Fueling Position - Not Implemented
                     6 - Exit
                     """);
-            switch (MenuHandler.handleSelection(scanner.nextLine())) {
+            switch (MenuInputHandler.getMenuSelection()) {
                 case MenuSelectionEnum.FIRST_OPTION_SELECTED -> editRecordPromptEquipmentSelected(RecordType.EQUIPMENT);
                 case MenuSelectionEnum.SECOND_OPTION_SELECTED -> editRecordPromptEquipmentSelected(RecordType.OPERATOR);
                 case MenuSelectionEnum.THIRD_OPTION_SELECTED -> editRecordPromptEquipmentSelected(RecordType.PRODUCT);
@@ -61,12 +56,12 @@ public class UserInterface {
                     1 - Add
                     2 - Edit - Not Implemented
                     3 - Exit""");
-            switch (MenuHandler.handleSelection(scanner.nextLine())) {
+            switch (MenuInputHandler.getMenuSelection()) {
                 case FIRST_OPTION_SELECTED -> {
                     UserAssignedRecord recordAssignments = x -> {
                         for (Map.Entry<String, Optional<String>> entry : x.entrySet()) {
                             System.out.print("Enter a value for " + entry.getKey() + ": ");
-                            entry.setValue(Optional.ofNullable(scanner.nextLine()));
+                            entry.setValue(Optional.ofNullable(MenuInputHandler.getInputString()));
                         }
                     };
                     Record.recordCreator(recordAssignments, recordType);
