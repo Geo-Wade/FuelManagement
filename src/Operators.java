@@ -1,26 +1,22 @@
 import java.util.HashSet;
-import java.util.Optional;
 
 public class Operators {
-    private static HashSet<OperatorRecord> operators;
+    private final static HashSet<OperatorRecord> operators = new HashSet<>();
 
     private Operators(){}
 
-    public static HashSet<OperatorRecord> getVehicles(){
-        createIfNull();
+    public static HashSet<OperatorRecord> getOperators(){
         return operators;
     }
     public static boolean add(OperatorRecord operator) {
-        createIfNull();
-        if(operator.getRecordField().values().stream().noneMatch(Optional::isEmpty)){
+        if(!isDuplicate(operator)){
             operators.add(operator);
-            return true;
         }
-        return false;
+        return true;
     }
-    private static void createIfNull(){
-        if(operators == null){
-            operators = new HashSet<>();
-        }
+    private static boolean isDuplicate(OperatorRecord operator){
+        return operators.stream()
+                .map(OperatorRecord::getOperatorID)
+                .anyMatch(id -> id.equals(operator.getOperatorID()));
     }
 }
