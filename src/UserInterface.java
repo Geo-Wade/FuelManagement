@@ -1,61 +1,44 @@
 import java.util.*;
 
 public class UserInterface {
-    public void firstPrompt() {
+    public void entryPrompt() {
 
         boolean valid = true;
         while (valid) {
-            System.out.println("""
-                    What Action Would you like to perform
-                    1 - Edit Record
-                    2 - Begin Fueling - Not Implemented
-                    3 - reset - Kills Program""");
+            MenuOutputHandler.entryPromptOutput();
             switch (MenuInputHandler.getMenuSelection()) {
-                case MenuSelectionEnum.FIRST_OPTION_SELECTED -> homePromptEditRecordSelected();
+                case MenuSelectionEnum.FIRST_OPTION_SELECTED -> selectRecord();
                 case MenuSelectionEnum.SECOND_OPTION_SELECTED ->
                         System.out.println("Begin Fueling has not been implemented");
                 case MenuSelectionEnum.THIRD_OPTION_SELECTED -> {
                     MenuInputHandler.inputClose();
                     valid = false;
                 }
-                default -> invalidSelection();
+                default -> MenuOutputHandler.invalidSelection();
             }
         }
     }
-
-    public void homePromptEditRecordSelected() {
+    public void selectRecord() {
         boolean keepPresenting = true;
         while (keepPresenting) {
-            System.out.println("""
-                    Which would you like to edit?
-                    1 - Equipment
-                    2 - Operator
-                    3 - Product
-                    4 - Tank
-                    5 - Fueling Position - Not Implemented
-                    6 - Exit
-                    """);
+            MenuOutputHandler.selectRecordOutput();
             switch (MenuInputHandler.getMenuSelection()) {
-                case MenuSelectionEnum.FIRST_OPTION_SELECTED -> editRecordPromptEquipmentSelected(RecordType.EQUIPMENT);
-                case MenuSelectionEnum.SECOND_OPTION_SELECTED -> editRecordPromptEquipmentSelected(RecordType.OPERATOR);
-                case MenuSelectionEnum.THIRD_OPTION_SELECTED -> editRecordPromptEquipmentSelected(RecordType.PRODUCT);
-                case MenuSelectionEnum.FOURTH_OPTION_SELECTED -> editRecordPromptEquipmentSelected(RecordType.TANK);
+                case MenuSelectionEnum.FIRST_OPTION_SELECTED -> selectRecordAction(RecordType.EQUIPMENT);
+                case MenuSelectionEnum.SECOND_OPTION_SELECTED -> selectRecordAction(RecordType.OPERATOR);
+                case MenuSelectionEnum.THIRD_OPTION_SELECTED -> selectRecordAction(RecordType.PRODUCT);
+                case MenuSelectionEnum.FOURTH_OPTION_SELECTED -> selectRecordAction(RecordType.TANK);
                 case MenuSelectionEnum.FIFTH_OPTION_SELECTED ->
                         System.out.println("Fueling Position Selection has not been handled yet");
                 case MenuSelectionEnum.SIXTH_OPTION_SELECTED -> keepPresenting = false;
-                default -> invalidSelection();
+                default -> MenuOutputHandler.invalidSelection();
             }
         }
     }
 
-    public void editRecordPromptEquipmentSelected(RecordType recordType) {
+    public void selectRecordAction(RecordType recordType) {
         boolean keepPresenting = true;
         while (keepPresenting) {
-            System.out.println("""
-                    What would you like to do to the record?
-                    1 - Add
-                    2 - Edit - Not Implemented
-                    3 - Exit""");
+            MenuOutputHandler.SelectRecordActionOutput();
             switch (MenuInputHandler.getMenuSelection()) {
                 case FIRST_OPTION_SELECTED -> {
                     UserAssignedRecord recordAssignments = x -> {
@@ -72,12 +55,8 @@ public class UserInterface {
                 case THIRD_OPTION_SELECTED -> {
                     keepPresenting = false;
                 }
-                default -> invalidSelection();
+                default -> MenuOutputHandler.invalidSelection();
             }
         }
-    }
-
-    public void invalidSelection() {
-        System.out.println("Please select a valid option from the menu");
     }
 }
