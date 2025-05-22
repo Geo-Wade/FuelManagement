@@ -1,4 +1,3 @@
-import java.util.*;
 
 public class UserInterface {
     public void entryPrompt() {
@@ -42,10 +41,8 @@ public class UserInterface {
             switch (MenuInputHandler.getMenuSelection()) {
                 case FIRST_OPTION_SELECTED -> {
                     UserAssignedRecord recordAssignments = x -> {
-                        for (Map.Entry<String, Optional<String>> entry : x.entrySet()) {
-                            System.out.print("Enter a value for " + entry.getKey() + ": ");
-                            entry.setValue(Optional.ofNullable(MenuInputHandler.getInputString()));
-                        }
+                        MenuOutputHandler.promptForField(x);
+                        return MenuInputHandler.getInputString();
                     };
                     Record.recordCreator(recordAssignments, recordType);
                 }

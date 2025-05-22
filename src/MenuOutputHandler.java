@@ -29,4 +29,8 @@ public class MenuOutputHandler {
         System.out.println("Please select a valid option from the menu");
     }
 
+    public static void promptForField(String key){
+        System.out.println("Please Enter a value for: " + key);
+    }
+
 }

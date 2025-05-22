@@ -1,6 +1,4 @@
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 public class ProductRecord extends Record {
     private String productID;
@@ -10,46 +8,30 @@ public class ProductRecord extends Record {
     final static String REORDER_LIMIT_TOKEN = "Reorder Limit";
     final static String PRICE_TOKEN = "Price";
 
-    public ProductRecord() {
-        recordFields = new LinkedHashMap<>();
-        recordFields.put(PRODUCT_ID_TOKEN, Optional.empty());
-        recordFields.put(REORDER_LIMIT_TOKEN, Optional.empty());
-        recordFields.put(PRICE_TOKEN, Optional.empty());
-    }
-
-    public Map<String, Optional<String>> initRecord() {
-        return recordFields;
-    }
-
     @Override
-    boolean assignRecord() {
-        for (String key : recordFields.keySet()) {
-            switch (key) {
-                case PRODUCT_ID_TOKEN:
-                    productID = recordFields.get(key).orElse("No Data Recorded");
-                    break;
-                case REORDER_LIMIT_TOKEN: {
-                    if(isInt(recordFields.get(key).orElse("Not an int"))) {
-                        reorderLimit = Integer.parseInt(recordFields.get(key).orElse("No Data Recorded"));
-                    }
-                    break;
-                }
-                case PRICE_TOKEN: {
-                    if(isFloat(recordFields.get(key).orElse("not a float"))) {
-                        price = Float.parseFloat(recordFields.get(key).orElse("No Data Recorded"));
-                    }
-                    break;
-                }
-                default:
-                    System.out.println("Invalid Data Provided To Record: " + key);
-                    break;
+    void assignRecord(String key, String field) {
+        switch (key){
+            case PRODUCT_ID_TOKEN -> {
+                productID = field;
+            }
+            case REORDER_LIMIT_TOKEN -> {
+                reorderLimit = Integer.parseInt(field);
+            }
+            case PRICE_TOKEN -> {
+                price = Float.parseFloat(field);
+            }
+            default -> {
+                throw new IllegalArgumentException();
             }
         }
-        return recordFields.values().stream().filter(Optional::isEmpty).toList().isEmpty();
     }
 
-    public Boolean setNewOdometer() {
-        return false;
+    public List<String> getFieldTokens(){
+        return Arrays.asList(
+                PRODUCT_ID_TOKEN,
+                REORDER_LIMIT_TOKEN,
+                PRICE_TOKEN
+        );
     }
 
     public String getProductID() {
@@ -75,7 +57,7 @@ public class ProductRecord extends Record {
     }
     private static boolean isInt(String string){
         try{
-            float x = Integer.parseInt(string);
+            Integer.parseInt(string);
         }catch(NumberFormatException e){
             return false;
         }
@@ -83,7 +65,7 @@ public class ProductRecord extends Record {
     }
     private static boolean isFloat(String string){
         try{
-            float x = Float.parseFloat(string);
+            Float.parseFloat(string);
         }catch(NumberFormatException e){
             return false;
         }

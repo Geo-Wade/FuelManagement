@@ -1,6 +1,4 @@
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 public class TankRecord extends Record {
     private String tankID;
@@ -12,49 +10,35 @@ public class TankRecord extends Record {
     final static String TANK_CAPACITY_TOKEN = "Tank Capacity";
     final static String FUEL_VOLUME_TOKEN = "Price";
 
-    public TankRecord() {
-        recordFields = new LinkedHashMap<>();
-        recordFields.put(TANK_ID_TOKEN, Optional.empty());
-        recordFields.put(TANK_NUMBER_TOKEN, Optional.empty());
-        recordFields.put(TANK_CAPACITY_TOKEN, Optional.empty());
-        recordFields.put(FUEL_VOLUME_TOKEN, Optional.empty());
-    }
-
-    public Map<String, Optional<String>> initRecord() {
-        return recordFields;
-    }
 
     @Override
-    boolean assignRecord() {
-        for (String key : recordFields.keySet()) {
-            switch (key) {
-                case TANK_ID_TOKEN:
-                    tankID = recordFields.get(key).orElse("No Data Recorded");
-                    break;
-                case TANK_NUMBER_TOKEN: {
-                    if (isInt(recordFields.get(key).orElse("No Data Recorded"))) {
-                        tankNumber = Integer.parseInt(recordFields.get(key).orElse("No Data Recorded"));
-                    }
-                    break;
-                }
-                case TANK_CAPACITY_TOKEN: {
-                    if (isInt(recordFields.get(key).orElse("No Data Recorded"))) {
-                        tankCapacity = Integer.parseInt(recordFields.get(key).orElse("No Data Recorded"));
-                    }
-                    break;
-                }
-                case FUEL_VOLUME_TOKEN: {
-                    if (isInt(recordFields.get(key).orElse("No Data Recorded"))) {
-                        fuelVolume = Integer.parseInt(recordFields.get(key).orElse("No Data Recorded"));
-                    }
-                    break;
-                }
-                default:
-                    System.out.println("Invalid Data Provided To Record: " + key);
-                    break;
+    void assignRecord(String key, String field) {
+        switch (key) {
+            case TANK_ID_TOKEN -> {
+                tankID = field;
+            }
+            case TANK_NUMBER_TOKEN -> {
+                tankNumber = Integer.parseInt(field);
+            }
+            case TANK_CAPACITY_TOKEN -> {
+                tankCapacity = Integer.parseInt(field);
+            }
+            case FUEL_VOLUME_TOKEN -> {
+                fuelVolume = Integer.parseInt(field);
+            }
+            default -> {
+                throw new IllegalArgumentException();
             }
         }
-        return recordFields.values().stream().filter(Optional::isEmpty).toList().isEmpty();
+    }
+
+    public List<String> getFieldTokens() {
+        return Arrays.asList(
+                TANK_ID_TOKEN,
+                TANK_NUMBER_TOKEN,
+                TANK_CAPACITY_TOKEN,
+                FUEL_VOLUME_TOKEN
+                );
     }
 
     public String getTankID() {
@@ -86,7 +70,7 @@ public class TankRecord extends Record {
 
     private static boolean isInt(String string) {
         try {
-            float x = Integer.parseInt(string);
+            Integer.parseInt(string);
         } catch (NumberFormatException e) {
             return false;
         }
@@ -95,7 +79,7 @@ public class TankRecord extends Record {
 
     private static boolean isFloat(String string) {
         try {
-            float x = Float.parseFloat(string);
+            Float.parseFloat(string);
         } catch (NumberFormatException e) {
             return false;
         }

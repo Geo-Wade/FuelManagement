@@ -1,7 +1,5 @@
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Optional;
-import java.util.TreeMap;
+import java.util.Arrays;
+import java.util.List;
 
 public class OperatorRecord extends Record {
     private String operatorID;
@@ -11,42 +9,30 @@ public class OperatorRecord extends Record {
     final static String OPERATOR_FIRST_NAME_TOKEN = "Operator First Name";
     final static String OPERATOR_LAST_NAME_TOKEN = "Operator Last Name";
 
-    public OperatorRecord() {
-        recordFields = new LinkedHashMap<>();
-        recordFields.put(OPERATOR_ID_TOKEN, Optional.empty());
-        recordFields.put(OPERATOR_FIRST_NAME_TOKEN, Optional.empty());
-        recordFields.put(OPERATOR_LAST_NAME_TOKEN, Optional.empty());
-    }
-
-    public Map<String, Optional<String>> initRecord() {
-        return recordFields;
-    }
-
     @Override
-    boolean assignRecord() {
-        for (String key : recordFields.keySet()) {
-            switch (key) {
-                case OPERATOR_ID_TOKEN:
-                    operatorID = recordFields.get(key).orElse("No Data Recorded");
-                    break;
-                case OPERATOR_FIRST_NAME_TOKEN: {
-                    operatorFirstName = recordFields.get(key).orElse("No Data Recorded");
-                    break;
-                }
-                case OPERATOR_LAST_NAME_TOKEN: {
-                    operatorLastName = recordFields.get(key).orElse("No Data Recorded");
-                    break;
-                }
-                default:
-                    System.out.println("Invalid Data Provided To Record: " + key);
-                    break;
+    void assignRecord(String key, String field) {
+        switch (key) {
+            case OPERATOR_ID_TOKEN -> {
+                operatorID = field;
+            }
+            case OPERATOR_FIRST_NAME_TOKEN -> {
+                operatorFirstName = field;
+            }
+            case OPERATOR_LAST_NAME_TOKEN -> {
+                operatorLastName = field;
+            }
+            default -> {
+                throw new IllegalArgumentException();
             }
         }
-        return recordFields.values().stream().filter(Optional::isEmpty).toList().isEmpty();
     }
 
-    public Boolean setNewOdometer() {
-        return false;
+    public List<String> getFieldTokens(){
+        return Arrays.asList(
+                OPERATOR_ID_TOKEN,
+                OPERATOR_FIRST_NAME_TOKEN,
+                OPERATOR_LAST_NAME_TOKEN
+        );
     }
 
     public String getOperatorID() {
@@ -70,5 +56,5 @@ public class OperatorRecord extends Record {
                 + "Operator Last Name: " + getOperatorLastName()
                 + "\n";
     }
-};
+}
 

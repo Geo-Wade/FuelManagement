@@ -1,17 +1,11 @@
-import com.sun.source.tree.Tree;
 
 import java.util.*;
 
 abstract class Record {
-    protected LinkedHashMap<String, Optional<String>> recordFields;
 
-    abstract Map<String, Optional<String>> initRecord();
+    abstract void assignRecord(String key, String field);
 
-    abstract boolean assignRecord();
-
-    final Map<String, Optional<String>> getRecordField() {
-        return recordFields;
-    }
+    public abstract List<String> getFieldTokens();
 
     static void recordCreator(UserAssignedRecord recordAssignment, RecordType recordType){
         Record record;
@@ -19,29 +13,37 @@ abstract class Record {
         {
             case EQUIPMENT -> {
                 record = new VehicleRecord();
-                recordAssignment.AssignRecordFields(record.getRecordField());
+                record.getFieldTokens().forEach(x -> {
+                    record.assignRecord(x, recordAssignment.AssignRecordFields(x));
+                });
                 if(!Vehicles.add((VehicleRecord)record)) {
                     recordFailedError();
                 }
             }
             case OPERATOR -> {
                 record = new OperatorRecord();
-                recordAssignment.AssignRecordFields(record.getRecordField());
+                record.getFieldTokens().forEach(x -> {
+                    record.assignRecord(x, recordAssignment.AssignRecordFields(x));
+                });
                 if(!Operators.add((OperatorRecord)record)) {
                     recordFailedError();
                 }
             }
             case PRODUCT -> {
                 record = new ProductRecord();
-                recordAssignment.AssignRecordFields(record.getRecordField());
-                if (!Products.add((ProductRecord) record)) {
+                record.getFieldTokens().forEach(x -> {
+                    record.assignRecord(x, recordAssignment.AssignRecordFields(x));
+                });
+                if(!Products.add((ProductRecord)record)) {
                     recordFailedError();
                 }
             }
             case TANK -> {
                 record = new TankRecord();
-                recordAssignment.AssignRecordFields(record.getRecordField());
-                if (!Tanks.add((TankRecord) record)) {
+                record.getFieldTokens().forEach(x -> {
+                    record.assignRecord(x, recordAssignment.AssignRecordFields(x));
+                });
+                if(!Tanks.add((TankRecord)record)) {
                     recordFailedError();
                 }
             }
