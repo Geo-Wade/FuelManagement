@@ -1,19 +1,30 @@
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.function.Predicate;
 
 public class StartFuelingCommand implements ICommand {
     public void execute(ConsoleIO consoleIO) {
-        String eqID = geteqID(consoleIO);
-        String opID = getopID(consoleIO);
+        if(FuelingManager.getFuelingManager().fuelingPositions.stream().noneMatch(Predicate.not(FuelingPosition::isFueling))){
+            System.out.println("No Available Hoses");
+            return;
+        }
+        String eqID = getEqID(consoleIO);
+        String opID = getOpID(consoleIO);
         if (isAuthorized(eqID, opID)) {
-            int selection = (consoleIO.getIntInput(buildHosePromptList())) - 1;
-            String HoseID = FuelingManager.getFuelingManager()
-                    .getHoses()
-                    .stream()
-                    .map(FuelingPosition::getHoseID)
-                    .toList()
-                    .get(selection);
-            FuelingTransaction fuelingTransaction = new FuelingTransaction(HoseID, eqID, opID);
-            FuelingManager.getFuelingManager().startFuelingTransaction(fuelingTransaction);
+            try {
+                int selection = (consoleIO.getIntInput(buildHosePromptList())) - 1;
+                String HoseID = FuelingManager.getFuelingManager()
+                        .getHoses()
+                        .stream().filter(position -> position.getHoseNumber() == selection)
+                        .map(FuelingPosition::getHoseID)
+                        .findFirst()
+                        .orElse(x -> {System.out.println("Hello"))};
+
+                FuelingTransaction fuelingTransaction = new FuelingTransaction(HoseID, eqID, opID);
+                FuelingManager.getFuelingManager().startFuelingTransaction(fuelingTransaction);
+            }catch (NoSuchElementException ex){
+                System.out.println("Hose is unavailable");
+            }
         }
     }
 
@@ -24,7 +35,7 @@ public class StartFuelingCommand implements ICommand {
 
     private String buildHosePromptList() {
         List<FuelingPosition> fuelingPositions = FuelingManager.getFuelingManager().fuelingPositions;
-        StringBuilder stringBuilder = new StringBuilder();
+        StringBuilder stringBuilder = new StringBuilder("Please select a hose\n");
         int perLine = 0;
         for (int count = 0; count <= fuelingPositions.size() - 1; count++) {
             if(!fuelingPositions.get(count).isFueling()) {
@@ -41,11 +52,11 @@ public class StartFuelingCommand implements ICommand {
         return stringBuilder.toString();
     }
 
-    private String geteqID(ConsoleIO consoleIO) {
+    private String getEqID(ConsoleIO consoleIO) {
         return consoleIO.getStringInput("Please Enter Equipment ID");
     }
 
-    private String getopID(ConsoleIO consoleIO) {
+    private String getOpID(ConsoleIO consoleIO) {
         return consoleIO.getStringInput("Please Enter Operator ID");
     }
 }

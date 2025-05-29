@@ -4,7 +4,7 @@ import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class FuelingTransaction {
-    private final static AtomicInteger transactionNumber = new AtomicInteger();
+    private final static AtomicInteger transactionNumber = new AtomicInteger(TransactionSearch.getLastTransactionNumber());
     private final String operatorID;
     private final String equipmentID;
     private final String hoseID;

@@ -1,5 +1,6 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -7,20 +8,23 @@ import java.util.Scanner;
 public class EquipmentRecordSearch {
     private static final File file = new File("Equipment.xls");
     private static Scanner scanner;
+
     public static boolean searchRecord(String column,  String value){
         try {
+            file.createNewFile();
             scanner = new Scanner(file);
 
         } catch (FileNotFoundException e) {
             System.out.println("File Not Found " + file);
             throw new RuntimeException(e);
+        }catch (IOException ex){
+            System.out.println("Could not create " + file + "in" + "EquipmentRecordSearch");
         }
         int index =  findIndexOfColumn(column);
         if(index >= 0) {
             return includesRecord(value, index);
         }
         else{
-            System.out.println("There is no field for " + column + " in record");
             return false;
         }
     }

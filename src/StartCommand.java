@@ -7,8 +7,7 @@ public class StartCommand implements ICommand {
             while (command.isEmpty()) {
                 ICommandFactory commandFactory = new StartCommandFactory();
                 command = commandFactory.commandFactory(consoleIO.getIntInput("""
-                        1) Fueling\t2) Add Record
-                        """));
+                        1) Fueling\t2) Add Record"""));
             }
             command.orElseThrow().execute(consoleIO);
         }

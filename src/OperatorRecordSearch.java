@@ -20,7 +20,6 @@ public class OperatorRecordSearch {
             return includesRecord(value, index);
         }
         else{
-            System.out.println("There is no field for " + column + " in record");
             return false;
         }
     }

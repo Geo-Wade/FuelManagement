@@ -4,7 +4,8 @@ import java.io.IOException;
 import java.util.Scanner;
 
 public class TransactionWriter {
-    private static final File file = new File("Tranactions.xls");
+    private static final File file = new File("Transactions.xls");
+    //extract to contstants class
 
     public static void writeTransaction(FuelingTransaction fuelingTransaction) {
         try {
@@ -22,31 +23,31 @@ public class TransactionWriter {
     }
 
     public static String getTransactionString(FuelingTransaction fuelingTransaction) {
-                return "\n" +
+        return "\n" +
                 fuelingTransaction.getTransactionNumber() +
-                ", " +
+                "\t" +
                 fuelingTransaction.getHoseID() +
-                ", " +
+                "\t" +
                 fuelingTransaction.getDateTime().getMonth().name() +
-                ", " +
+                "," +
                 fuelingTransaction.getDateTime().getDayOfMonth() +
                 " " +
                 fuelingTransaction.getDateTime().getYear() +
-                ", " +
+                "\t" +
                 fuelingTransaction.getDateTime().getHour() +
                 ":" +
                 fuelingTransaction.getDateTime().getMinute() +
                 ":" +
                 fuelingTransaction.getDateTime().getSecond() +
-                ", " +
+                "\t" +
                 fuelingTransaction.getOperatorID() +
-                ", " +
+                "\t" +
                 fuelingTransaction.getEquipmentID() +
-                ", " +
+                "\t" +
                 fuelingTransaction.getQuantity();
     }
 
     private static String getHeader() {
-        return "Transaction Number,Date,Time,Operator ID,Equipment ID,Quantity";
+        return "Transaction Number\tHoseID\tDate\tTime\tOperator ID\tEquipment ID\tQuantity";
     }
 }

@@ -1,13 +1,22 @@
 import java.util.List;
+import java.util.NoSuchElementException;
 
 public class StopFuelingCommand implements ICommand{
-    public void execute(ConsoleIO consoleIO){
-        int hoseSelection = consoleIO.getIntInput(buildHosePromptList());
-        FuelingManager.getFuelingManager()
-                .stopFuelingTransaction(FuelingTransaction.getOpenTransactionByHose(FuelingManager.getFuelingManager()
-                        .fuelingPositions.stream()
-                        .map(FuelingPosition::getHoseID)
-                        .toList().get(hoseSelection-1)));
+    public void execute(ConsoleIO consoleIO) {
+        if(FuelingManager.getFuelingManager().fuelingPositions.stream().noneMatch(FuelingPosition::isFueling)) {
+            System.out.println("No Hoses Fueling");
+            return;
+        }
+        try {
+            int hoseSelection = consoleIO.getIntInput(buildHosePromptList());
+            FuelingManager.getFuelingManager()
+                    .stopFuelingTransaction(FuelingTransaction.getOpenTransactionByHose(FuelingManager.getFuelingManager()
+                            .fuelingPositions.stream()
+                            .map(FuelingPosition::getHoseID)
+                            .toList().get(hoseSelection - 1)));
+        } catch (NoSuchElementException ex) {
+            System.out.println("hose does not appear to be fueling at this time");
+        }
     }
 
     private String buildHosePromptList() {
