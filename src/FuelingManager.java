@@ -15,14 +15,18 @@ public class FuelingManager {
     }
 
     public void stopFuelingTransaction(FuelingTransaction fuelingTransaction) {
-        double quantity = fuelingPositions.stream()
-                .filter(x -> x.getHoseID().equalsIgnoreCase(fuelingTransaction.getHoseID()))
-                .filter(FuelingPosition::isFueling)
-                .findFirst()
-                .orElseThrow()
-                .stop();
-        fuelingTransaction.setQuantity(quantity);
-        fuelingTransaction.close();
+        if(fuelingTransaction != null) {
+            double quantity = fuelingPositions.stream()
+                    .filter(x -> x.getHoseID().equalsIgnoreCase(fuelingTransaction.getHoseID()))
+                    .filter(FuelingPosition::isFueling)
+                    .findFirst()
+                    .orElseThrow()
+                    .stop();
+            fuelingTransaction.setQuantity(quantity);
+            fuelingTransaction.close();
+        } else {
+            System.out.println("Select Hose is not currently fueling");
+        }
 
 
     }

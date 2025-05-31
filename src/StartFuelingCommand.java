@@ -1,5 +1,6 @@
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.function.Consumer;
 import java.util.function.Predicate;
 
 public class StartFuelingCommand implements ICommand {
@@ -11,20 +12,20 @@ public class StartFuelingCommand implements ICommand {
         String eqID = getEqID(consoleIO);
         String opID = getOpID(consoleIO);
         if (isAuthorized(eqID, opID)) {
-            try {
                 int selection = (consoleIO.getIntInput(buildHosePromptList())) - 1;
-                String HoseID = FuelingManager.getFuelingManager()
+                String hoseID = FuelingManager.getFuelingManager()
                         .getHoses()
                         .stream().filter(position -> position.getHoseNumber() == selection)
                         .map(FuelingPosition::getHoseID)
                         .findFirst()
-                        .orElse(x -> {System.out.println("Hello"))};
-
-                FuelingTransaction fuelingTransaction = new FuelingTransaction(HoseID, eqID, opID);
-                FuelingManager.getFuelingManager().startFuelingTransaction(fuelingTransaction);
-            }catch (NoSuchElementException ex){
-                System.out.println("Hose is unavailable");
-            }
+                        .orElse(null);
+                if(hoseID != null) {
+                    FuelingTransaction fuelingTransaction = new FuelingTransaction(hoseID, eqID, opID);
+                    FuelingManager.getFuelingManager().startFuelingTransaction(fuelingTransaction);
+                }
+                else{
+                    System.out.println(("Selected Hose is not available"));
+                }
         }
     }
 

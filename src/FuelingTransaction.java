@@ -61,6 +61,6 @@ public class FuelingTransaction {
         return openTransactions.stream()
                 .filter(x->x.getHoseID().equalsIgnoreCase(hoseID))
                 .findAny()
-                .orElseThrow();
+                .orElse(null);
     }
 }
