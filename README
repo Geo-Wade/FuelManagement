@@ -1,6 +1,3 @@
-#TODO - Fueling position records
-#TODO - Set timers for UI prompts to give more time for reading
-#TODO - Set timout timers for UI so menus will return to the previous menu
-#TODO - Create mechanic for asynchronous fueling and fuel recording 
-#TODO - Create testing framework with JUnit
-#TODO - Write records to file 
+This was a practice project that I abandoned when I decided to use Spring Boot for DI. 
+This has been rewritten and reworked in FuelManagementApp2
+This project can be referenced for my personal progress. 
