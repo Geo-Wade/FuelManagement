@@ -1,60 +1,36 @@
-import java.util.Arrays;
-import java.util.List;
-
-public class OperatorRecord extends Record {
-    private String operatorID;
-    private String operatorFirstName;
-    private String operatorLastName;
-    final static String OPERATOR_ID_TOKEN = "Operator ID";
-    final static String OPERATOR_FIRST_NAME_TOKEN = "Operator First Name";
-    final static String OPERATOR_LAST_NAME_TOKEN = "Operator Last Name";
-
-    @Override
-    void assignRecord(String key, String field) {
-        switch (key) {
-            case OPERATOR_ID_TOKEN -> {
-                operatorID = field;
-            }
-            case OPERATOR_FIRST_NAME_TOKEN -> {
-                operatorFirstName = field;
-            }
-            case OPERATOR_LAST_NAME_TOKEN -> {
-                operatorLastName = field;
-            }
-            default -> {
-                throw new IllegalArgumentException();
-            }
-        }
+public class OperatorRecord {
+    private final String ID;
+    private String firstName;
+    private String lastName;
+    OperatorRecord(String ID, String firstName, String lastName){
+        this.ID = ID;
+        this.firstName = firstName;
+        this.lastName = lastName;
     }
 
-    public List<String> getFieldTokens(){
-        return Arrays.asList(
-                OPERATOR_ID_TOKEN,
-                OPERATOR_FIRST_NAME_TOKEN,
-                OPERATOR_LAST_NAME_TOKEN
-        );
+    public OperatorRecord setFirstName(String firstName){
+        this.firstName = firstName;
+        return this;
     }
 
-    public String getOperatorID() {
-        return operatorID;
+    public OperatorRecord setLastName(String lastName){
+        this.lastName = lastName;
+        return this;
     }
 
-    public String getOperatorFirstName() {
-        return operatorFirstName;
+    public String getID(){
+        return ID;
     }
 
-    public String getOperatorLastName() {
-        return operatorLastName;
+    public String getFirstName(){
+        return firstName;
     }
 
-    @Override
-    public String toString() {
-        return "Operator ID: " + getOperatorID()
-                + "\n"
-                + "Operator First Name: " + getOperatorFirstName()
-                + "\n"
-                + "Operator Last Name: " + getOperatorLastName()
-                + "\n";
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void writeToFile(){
+        OperatorWriter.writeToFile(this);
     }
 }
-
